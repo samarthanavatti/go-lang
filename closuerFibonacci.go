@@ -4,13 +4,22 @@ import "fmt"
 
 // fibonacci is a function that returns
 // a function that returns an int.
-func fibonacci() func() int {
+func fibonacci() func(int) int {
    pePrev:=0
    prev:=1
-
-   return func() int{
-    result := pePrev
-	pePrev, prev = prev, result+prev
+   result:= 0
+   return func(x int) int{
+   if x>1{
+    result = prev+pePrev
+	pePrev = prev
+	prev = result
+    }
+	if x==0{
+	result = 0
+	}
+	if x==1{
+	result =1
+	}
 	return result
    }
 
@@ -19,6 +28,6 @@ func fibonacci() func() int {
 func main() {
 	f := fibonacci()
 	for i := 0; i < 10; i++ {
-		fmt.Println(f())
+		fmt.Println(f(i))
 	}
 }
